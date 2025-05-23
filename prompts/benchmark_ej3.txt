@@ -1,1 +1,1 @@
-¿Cuántos números primos hay entre 1 y 100?
+Explique qué es la frecuencia absoluta acumulada y cuáles son sus propiedades
