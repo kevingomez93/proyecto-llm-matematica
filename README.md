@@ -136,6 +136,14 @@ proyecto-llm-matematicas/
 └── README.md           # Este archivo
 ```
 
+## UI
+
+![image](https://github.com/user-attachments/assets/47812759-8f61-40e3-86e3-9d5708bc9a4e)
+
+![image](https://github.com/user-attachments/assets/a194332e-b854-4c7f-b89b-cdae648a5e93)
+
+
+
 ## Contribuciones
 
 Las contribuciones son bienvenidas. Puedes:
