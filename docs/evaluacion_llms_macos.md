@@ -118,17 +118,17 @@
 | 21 | benchmark_ej21 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
 | 22 | benchmark_ej22 | llama2 | ✓ | ✓ | ✓ | ✓ | |
 | 22 | benchmark_ej22 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
-| 23 | benchmark_ej23 | llama2 | ✓ | ✓ | ✓ | ✓ | |
+| 23 | benchmark_ej23 | llama2 | ✓ |  | ✓ | ✓ | |
 | 23 | benchmark_ej23 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
 | 24 | benchmark_ej24 | llama2 | ✓ | ✓ | ✓ | ✓ | |
 | 24 | benchmark_ej24 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
-| 25 | benchmark_ej25 | llama2 | ✓ | ✓ | ✓ | ✓ | |
+| 25 | benchmark_ej25 | llama2 |  | ✓ | ✓ | ✓ | |
 | 25 | benchmark_ej25 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
 | 26 | benchmark_ej26 | llama2 | ✓ | ✓ | ✓ | ✓ | |
 | 26 | benchmark_ej26 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
 | 27 | benchmark_ej27 | llama2 | ✓ | ✓ | ✓ | ✓ | |
 | 27 | benchmark_ej27 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
-| 28 | benchmark_ej28 | llama2 | ✓ | ✓ | ✓ | ✓ | |
+| 28 | benchmark_ej28 | llama2 | ✓ | ✓ |  | ✓ | |
 | 28 | benchmark_ej28 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
 | 29 | benchmark_ej29 | llama2 | ✓ | ✓ | ✓ | ✓ | |
 | 29 | benchmark_ej29 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
