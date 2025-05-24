@@ -7,6 +7,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import numpy as np
 from datetime import datetime
+import os
 
 API_URL = "http://localhost:8000"
 
@@ -150,22 +151,38 @@ def get_problems():
 # Function to run batch test
 def run_batch_test(models, problem_ids=None):
     try:
-        payload = {"models": models}
-        if problem_ids:
-            payload["problem_ids"] = problem_ids
+        # Process in batches of 5 problems at a time
+        BATCH_SIZE = 5
+        all_results = []
         
-        with st.spinner("Ejecutando pruebas. Esto puede tardar varios minutos..."):
-            start_time = time.time()
-            resp = requests.post(f"{API_URL}/batch-test", json=payload, timeout=300)
-            resp.raise_for_status()
-            data = resp.json()
-            end_time = time.time()
+        # Get all problem IDs if not specified
+        if not problem_ids:
+            prompts_dir = "../prompts"
+            problem_ids = [f.replace(".txt", "") for f in os.listdir(prompts_dir) 
+                         if f.startswith("benchmark_ej") and f.endswith(".txt")]
+        
+        # Process problems in batches
+        for i in range(0, len(problem_ids), BATCH_SIZE):
+            batch_problems = problem_ids[i:i + BATCH_SIZE]
+            payload = {
+                "models": models,
+                "problem_ids": batch_problems
+            }
             
+            with st.spinner(f"Ejecutando pruebas {i+1}-{min(i+BATCH_SIZE, len(problem_ids))} de {len(problem_ids)}..."):
+                start_time = time.time()
+                resp = requests.post(f"{API_URL}/batch-test", json=payload, timeout=600)  # Increased timeout to 10 minutes
+                resp.raise_for_status()
+                data = resp.json()
+                end_time = time.time()
+                
+                all_results.extend(data["results"])
+        
         # Store in session state
-        st.session_state.test_results = data["results"]
+        st.session_state.test_results = all_results
         st.session_state.last_test_time = end_time - start_time
         
-        return data["results"]
+        return all_results
     except Exception as e:
         st.error(f"Error en la prueba por lotes: {e}")
         return None
@@ -250,19 +267,30 @@ else:
                 problem_container = st.container()
                 problem_selections = {}
                 
-                # Group problems by 5 per row
-                with problem_container:
-                    for i in range(0, len(problems), 5):
+                # Group problems by language
+                problems_by_lang = {}
+                for problem in problems:
+                    lang = problem.get("language", "espanol")  # Default to español if not specified
+                    if lang not in problems_by_lang:
+                        problems_by_lang[lang] = []
+                    problems_by_lang[lang].append(problem)
+                
+                # Display problems by language
+                for lang, lang_problems in problems_by_lang.items():
+                    st.markdown(f"##### {lang.capitalize()}")
+                    # Group problems by 5 per row
+                    for i in range(0, len(lang_problems), 5):
                         cols = st.columns(5)
                         for j in range(5):
-                            if i+j < len(problems):
-                                problem = problems[i+j]
+                            if i+j < len(lang_problems):
+                                problem = lang_problems[i+j]
                                 with cols[j]:
                                     problem_selections[problem["id"]] = st.checkbox(
                                         f"{problem['id'].replace('benchmark_ej', '')}",
                                         value=True,
                                         help=problem["content"]
                                     )
+                    st.markdown("<div style='height: 20px'></div>", unsafe_allow_html=True)
                 
                 # Run test button with better styling
                 st.markdown("<div style='height: 20px'></div>", unsafe_allow_html=True)

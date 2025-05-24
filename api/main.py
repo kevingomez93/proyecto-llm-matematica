@@ -22,6 +22,7 @@ class TestResult(BaseModel):
     prompt: str
     response: str
     time_ms: int
+    language: str
 
 app = FastAPI(
     title="API Proyecto LLM",
@@ -66,15 +67,24 @@ def list_problems():
     try:
         prompts_dir = "../prompts"  # Ruta relativa a donde se ejecuta la API
         problems = []
-        for file in os.listdir(prompts_dir):
-            if file.startswith("benchmark_ej") and file.endswith(".txt"):
-                problem_id = file.replace(".txt", "")
-                with open(os.path.join(prompts_dir, file), "r") as f:
-                    content = f.read().strip()
-                problems.append({
-                    "id": problem_id,
-                    "content": content
-                })
+        
+        # Process both language directories
+        for lang in ["espanol", "ingles"]:
+            lang_dir = os.path.join(prompts_dir, lang)
+            if not os.path.exists(lang_dir):
+                continue
+                
+            for file in os.listdir(lang_dir):
+                if file.startswith("benchmark_ej") and file.endswith(".txt"):
+                    problem_id = file.replace(".txt", "")
+                    with open(os.path.join(lang_dir, file), "r") as f:
+                        content = f.read().strip()
+                    problems.append({
+                        "id": problem_id,
+                        "content": content,
+                        "language": lang
+                    })
+        
         return {"problems": sorted(problems, key=lambda x: x["id"])}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -85,51 +95,78 @@ def batch_test(req: BatchTestRequest):
     try:
         # Obtener la lista de problemas
         prompts_dir = "../prompts"
-        if req.problem_ids:
-            problem_files = [f"benchmark_ej{id.split('benchmark_ej')[-1]}.txt" 
-                            if id.startswith("benchmark_ej") else f"benchmark_ej{id}.txt" 
-                            for id in req.problem_ids]
-        else:
-            problem_files = [f for f in os.listdir(prompts_dir) 
-                            if f.startswith("benchmark_ej") and f.endswith(".txt")]
-        
         results = []
         
+        # Process each model and problem combination
         for model in req.models:
-            for file in problem_files:
-                problem_path = os.path.join(prompts_dir, file)
-                if not os.path.exists(problem_path):
+            # Process both language directories
+            for lang in ["espanol", "ingles"]:
+                lang_dir = os.path.join(prompts_dir, lang)
+                if not os.path.exists(lang_dir):
                     continue
+                    
+                if req.problem_ids:
+                    problem_files = [f"benchmark_ej{id.split('benchmark_ej')[-1]}.txt" 
+                                    if id.startswith("benchmark_ej") else f"benchmark_ej{id}.txt" 
+                                    for id in req.problem_ids]
+                else:
+                    problem_files = [f for f in os.listdir(lang_dir) 
+                                    if f.startswith("benchmark_ej") and f.endswith(".txt")]
                 
-                with open(problem_path, "r") as f:
-                    prompt = f.read().strip()
-                
-                # Ejecutar el prompt y medir tiempo
-                start_time = time.time() * 1000
-                payload = {
-                    "model": model,
-                    "messages": [{"role": "user", "content": prompt}]
-                }
-                resp = requests.post(
-                    f"{OLLAMA_HOST}/v1/chat/completions",
-                    json=payload,
-                    headers={"Content-Type": "application/json"}
-                )
-                resp.raise_for_status()
-                data = resp.json()
-                end_time = time.time() * 1000
-                
-                # Extraer el contenido de la respuesta
-                content = data["choices"][0]["message"]["content"]
-                problem_id = file.replace(".txt", "")
-                
-                results.append(TestResult(
-                    problem_id=problem_id,
-                    model=model,
-                    prompt=prompt,
-                    response=content,
-                    time_ms=int(end_time - start_time)
-                ))
+                for file in problem_files:
+                    problem_path = os.path.join(lang_dir, file)
+                    if not os.path.exists(problem_path):
+                        continue
+                    
+                    try:
+                        with open(problem_path, "r") as f:
+                            prompt = f.read().strip()
+                        
+                        # Ejecutar el prompt y medir tiempo
+                        start_time = time.time() * 1000
+                        payload = {
+                            "model": model,
+                            "messages": [{"role": "user", "content": prompt}]
+                        }
+                        
+                        # Add timeout and retry logic
+                        max_retries = 3
+                        retry_delay = 5  # seconds
+                        
+                        for attempt in range(max_retries):
+                            try:
+                                resp = requests.post(
+                                    f"{OLLAMA_HOST}/v1/chat/completions",
+                                    json=payload,
+                                    headers={"Content-Type": "application/json"},
+                                    timeout=180  # 3 minutes timeout per request
+                                )
+                                resp.raise_for_status()
+                                data = resp.json()
+                                break
+                            except (requests.exceptions.Timeout, requests.exceptions.ConnectionError) as e:
+                                if attempt == max_retries - 1:
+                                    raise
+                                time.sleep(retry_delay)
+                        
+                        end_time = time.time() * 1000
+                        
+                        # Extraer el contenido de la respuesta
+                        content = data["choices"][0]["message"]["content"]
+                        problem_id = file.replace(".txt", "")
+                        
+                        results.append(TestResult(
+                            problem_id=problem_id,
+                            model=model,
+                            prompt=prompt,
+                            response=content,
+                            time_ms=int(end_time - start_time),
+                            language=lang
+                        ))
+                    except Exception as e:
+                        # Log the error but continue with other problems
+                        print(f"Error processing {file} with model {model}: {str(e)}")
+                        continue
         
         return {"results": [r.dict() for r in results]}
     except Exception as e:

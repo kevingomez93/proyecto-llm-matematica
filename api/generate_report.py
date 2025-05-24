@@ -14,31 +14,48 @@ import subprocess
 def get_system_info():
     """Obtiene información del sistema para incluir en el reporte."""
     cpu = platform.processor()
-    if not cpu:
-        cpu = subprocess.check_output("sysctl -n machdep.cpu.brand_string", shell=True).strip().decode()
-    
-    ram = round(psutil.virtual_memory().total / (1024**3), 2)
-    
-    # Intentar obtener información de GPU si está disponible
-    gpu = "No disponible"
+    ram = f"{round(psutil.virtual_memory().total / (1024**3), 1)} GB"
+    system = platform.system()
+    release = platform.release()
+    gpu = "N/A"
+    vram = "N/A"
+
     try:
-        if platform.system() == "Darwin":  # macOS
-            gpu_info = subprocess.check_output("system_profiler SPDisplaysDataType | grep Chipset", shell=True).strip().decode()
-            if gpu_info:
-                gpu = gpu_info.split(":")[1].strip()
-        elif platform.system() == "Linux":
-            gpu_info = subprocess.check_output("lspci | grep -i 'vga\|3d\|2d'", shell=True).strip().decode()
-            if gpu_info:
-                gpu = gpu_info.split(":")[-1].strip()
-    except:
-        pass
-    
+        if system == "Darwin":
+            # macOS: obtener VRAM y GPU
+            sp = subprocess.check_output("system_profiler SPDisplaysDataType", shell=True).decode()
+            for line in sp.splitlines():
+                if "Chipset Model" in line:
+                    gpu = line.split(":")[-1].strip()
+                if "VRAM" in line:
+                    vram = line.split(":")[-1].strip()
+                    break  # Tomar la primera VRAM encontrada
+            
+            # Si es Apple Silicon y no se encontró VRAM específica, usar la RAM como VRAM
+            if "Apple" in gpu and vram == "N/A":
+                vram = f"{ram} (Memoria unificada con RAM)"
+        elif system == "Linux":
+            gpu_info = subprocess.check_output("lspci | grep -i 'vga\\|3d\\|2d'", shell=True).strip().decode()
+            gpu = gpu_info
+            try:
+                vram_info = subprocess.check_output("nvidia-smi --query-gpu=memory.total --format=csv,noheader", shell=True).decode().strip()
+                vram = vram_info
+            except Exception:
+                vram = "N/A"
+        else:
+            gpu = "N/A"
+            vram = "N/A"
+    except Exception:
+        gpu = "N/A"
+        vram = "N/A"
+
     return {
         "cpu": cpu,
-        "ram": f"{ram} GB",
+        "ram": ram,
         "gpu": gpu,
-        "system": platform.system(),
-        "release": platform.release()
+        "vram": vram,
+        "system": system,
+        "release": release
     }
 
 def generate_report(results_file, output_file):
@@ -73,20 +90,25 @@ def generate_report(results_file, output_file):
     
     # Iniciar el reporte
     report = [
-        "# Evaluación Comparativa de Modelos LLM",
+        "# Evaluación de Modelos LLM para Resolución de Problemas Matemáticos",
         "",
-        "## Configuración de la prueba",
+        "## 1. Configuración del Entorno",
         "",
-        f"- **Fecha:** {datetime.now().strftime('%d/%m/%Y %H:%M')}",
-        f"- **Modelos probados:** {', '.join(models)}",
+        "### 1.1 Especificaciones de Hardware",
+        f"- **CPU:** {system_info['cpu']}",
+        f"- **RAM:** {system_info['ram']}",
+        f"- **GPU:** {system_info['gpu']}",
+        f"- **VRAM:** {system_info['vram']}",
+        f"- **Sistema Operativo:** {system_info['system']} {system_info['release']}",
+        "",
+        "### 1.2 Modelos Evaluados",
+        f"- **Modelos:** {', '.join(models)}",
+        f"- **Fecha de evaluación:** {datetime.now().strftime('%d/%m/%Y %H:%M')}",
         f"- **Número de problemas:** {len(problem_order)}",
-        "- **Especificaciones de hardware:** ",
-        f"  - CPU: {system_info['cpu']}",
-        f"  - RAM: {system_info['ram']}",
-        f"  - GPU: {system_info['gpu']}",
-        f"  - Sistema: {system_info['system']} {system_info['release']}",
         "",
-        "## Resultados de tiempos",
+        "## 2. Resultados de Rendimiento",
+        "",
+        "### 2.1 Tiempos de Respuesta",
         ""
     ]
     
@@ -130,57 +152,86 @@ def generate_report(results_file, output_file):
         time_table.append(avg_row)
     
     report.extend(time_table)
+    
+    # Agregar sección de análisis por idioma
     report.extend([
         "",
-        "## Evaluación de calidad",
+        "## 3. Análisis por Idioma",
         "",
-        "### Criterios de evaluación",
-        "- **Correcto:** La respuesta es matemáticamente correcta.",
-        "- **Paso a paso:** La respuesta explica el proceso de solución de forma clara.",
-        "- **Notación:** La respuesta utiliza notación matemática adecuada.",
-        "- **Completo:** La respuesta aborda todos los aspectos del problema.",
+        "### 3.1 Comparativa de Rendimiento Español vs Inglés",
         ""
     ])
     
-    # Tabla de problemas para evaluación manual
-    problem_descriptions = {
-        "benchmark_ej1": "Probabilidad dados | Calcular probabilidad de suma 7 al tirar dos dados",
-        "benchmark_ej2": "Integral | Calcular la integral ∫₀¹ x² dx",
-        "benchmark_ej3": "Números primos | Contar números primos entre 1 y 100",
-        "benchmark_ej4": "Ecuación diferencial | Resolver dy/dx = 3x² con y(0)=5",
-        "benchmark_ej5": "Física | Calcular tiempo para recorrer 180 km a 72 km/h",
-        "benchmark_ej6": "Álgebra | Desarrollar la expresión (2x - 3)²",
-        "benchmark_ej7": "Probabilidad | Probabilidad de extraer 2 bolas del mismo color",
-        "benchmark_ej8": "Sistema ecuaciones | Resolver sistema 3x+2y=7, 5x-y=4",
-        "benchmark_ej9": "Derivada | Calcular derivada de f(x) = x³ln(x) - 2x²",
-        "benchmark_ej10": "Geometría | Verificar triángulo rectángulo y calcular área"
-    }
+    # Agrupar resultados por idioma
+    lang_times = df.groupby(['language', 'model'])['time_ms'].mean().round(1)
     
-    quality_headers = [model for model in models]
+    # Crear tabla comparativa por idioma
+    lang_table = ["| Idioma | " + " | ".join(f"{m} (ms)" for m in models) + " |",
+                 "|--------|" + "---------------|" * len(models)]
+    
+    for lang in ['espanol', 'ingles']:
+        row = f"| {lang.capitalize()} |"
+        for model in models:
+            try:
+                row += f" {lang_times[lang, model]} |"
+            except KeyError:
+                row += " N/A |"
+        lang_table.append(row)
+    
+    report.extend(lang_table)
+    
+    # Agregar sección de evaluación de calidad
+    report.extend([
+        "",
+        "## 4. Evaluación de Calidad",
+        "",
+        "### 4.1 Criterios de Evaluación",
+        "- **Precisión Matemática:** La respuesta es matemáticamente correcta",
+        "- **Claridad en la Explicación:** La respuesta explica el proceso de solución de forma clara",
+        "- **Notación Matemática:** Uso adecuado de símbolos y notación matemática",
+        "- **Completitud:** La respuesta aborda todos los aspectos del problema",
+        "",
+        "### 4.2 Resultados por Problema",
+        ""
+    ])
+    
+    # Tabla de evaluación de calidad
     quality_table = [
-        "| # | Problema | Descripción | " + " | ".join(quality_headers) + " | Notas |",
-        "|---|----------|-------------|" + "----------|" * len(models) + "-------|"
+        "| # | Problema | Modelo | Precisión | Claridad | Notación | Completitud | Observaciones |",
+        "|---|----------|--------|-----------|----------|----------|-------------|---------------|"
     ]
     
     for problem in problem_order:
         problem_num = problem.replace("benchmark_ej", "")
-        problem_type, description = problem_descriptions.get(problem, "|").split("|")
-        row = f"| {problem_num} | {problem_type.strip()} | {description.strip()} |"
-        for _ in models:
-            row += " | "  # Celdas vacías para evaluación manual
-        row += " |"
-        quality_table.append(row)
+        for model in models:
+            quality_table.append(f"| {problem_num} | {problem} | {model} | | | | | |")
     
     report.extend(quality_table)
+    
+    # Agregar conclusiones y recomendaciones
     report.extend([
         "",
-        "## Conclusiones",
+        "## 5. Conclusiones",
         "",
-        "[Enumerar las conclusiones principales sobre el rendimiento de los modelos]",
+        "### 5.1 Rendimiento General",
+        "- Comparativa de tiempos de respuesta entre modelos",
+        "- Análisis de estabilidad y consistencia",
+        "- Evaluación de la eficiencia computacional",
         "",
-        "## Recomendaciones",
+        "### 5.2 Comparativa por Idioma",
+        "- Análisis de rendimiento en español vs inglés",
+        "- Identificación de posibles sesgos lingüísticos",
         "",
-        "[Recomendaciones sobre qué modelo utilizar para diferentes tipos de problemas]"
+        "## 6. Recomendaciones",
+        "",
+        "### 6.1 Selección de Modelo",
+        "- Recomendaciones basadas en el tipo de problema",
+        "- Consideraciones de hardware necesarias",
+        "",
+        "### 6.2 Mejores Prácticas",
+        "- Tips para optimizar prompts",
+        "- Estrategias para mejorar la precisión",
+        "- Consideraciones de rendimiento"
     ])
     
     # Escribir el reporte
