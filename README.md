@@ -103,20 +103,6 @@ El reporte incluirá:
 - Comparativa de tiempos entre modelos
 - Plantilla para evaluar la calidad de las respuestas
 
-## Problemas matemáticos incluidos
-
-El sistema incluye 10 problemas matemáticos que cubren:
-
-1. Probabilidad básica (suma de dados)
-2. Cálculo - integrales
-3. Teoría de números (conteo de primos)
-4. Ecuaciones diferenciales
-5. Problemas de física - cinemática
-6. Desarrollo de expresiones algebraicas
-7. Probabilidad avanzada
-8. Sistemas de ecuaciones lineales
-9. Cálculo - derivadas
-10. Geometría (triángulos)
 
 ## Estructura del proyecto
 
