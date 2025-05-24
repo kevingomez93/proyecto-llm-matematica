@@ -1,8 +1,14 @@
 # Asistente Matemático con LLMs Locales
 
 Este proyecto implementa un sistema para evaluar modelos de lenguaje (LLMs) locales en la resolución de problemas matemáticos. Utilizando [Ollama](https://ollama.ai/) como motor de ejecución, permite comparar diferentes modelos como Llama 2 y Llama 3.2 en su capacidad para resolver problemas matemáticos.
+Se usara para el primer y segundo parcial de la materia Probabilidad y Estadistica
 
-![Vista previa](https://github.com/user/repo/assets/preview.png)
+
+### Integrantes
+
+Joaquin Zuviria
+
+Kevin Gomez
 
 ## Características principales
 
