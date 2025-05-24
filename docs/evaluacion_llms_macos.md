@@ -11,7 +11,7 @@
 
 ### 1.2 Modelos Evaluados
 - **Modelos:** llama2, llama3.2
-- **Fecha de evaluación:** 24/05/2025 16:29
+- **Fecha de evaluación:** 24/05/2025 18:19
 - **Número de problemas:** 30
 
 ## 2. Resultados de Rendimiento
@@ -51,6 +51,7 @@
 | Ejercicio 29 | 8427 | 3320 | 5107 | 153.8% |
 | Ejercicio 30 | 6685 | 3979 | 2706 | 68.0% |
 | **Promedio** | 9200.2 | 6255.0 | 2945.2 | 76.6% |
+| **Tiempo Total** | 276006.0 | 187651.0 | | |
 
 ## 3. Análisis por Idioma
 
@@ -73,66 +74,66 @@
 
 | # | Problema | Modelo | Precisión | Claridad | Notación | Completitud | Observaciones |
 |---|----------|--------|-----------|----------|----------|-------------|---------------|
-| 1 | benchmark_ej1 | llama2 | | | | | |
-| 1 | benchmark_ej1 | llama3.2 | | | | | |
-| 2 | benchmark_ej2 | llama2 | | | | | |
-| 2 | benchmark_ej2 | llama3.2 | | | | | |
-| 3 | benchmark_ej3 | llama2 | | | | | |
-| 3 | benchmark_ej3 | llama3.2 | | | | | |
-| 4 | benchmark_ej4 | llama2 | | | | | |
-| 4 | benchmark_ej4 | llama3.2 | | | | | |
-| 5 | benchmark_ej5 | llama2 | | | | | |
-| 5 | benchmark_ej5 | llama3.2 | | | | | |
-| 6 | benchmark_ej6 | llama2 | | | | | |
-| 6 | benchmark_ej6 | llama3.2 | | | | | |
-| 7 | benchmark_ej7 | llama2 | | | | | |
-| 7 | benchmark_ej7 | llama3.2 | | | | | |
-| 8 | benchmark_ej8 | llama2 | | | | | |
-| 8 | benchmark_ej8 | llama3.2 | | | | | |
-| 9 | benchmark_ej9 | llama2 | | | | | |
-| 9 | benchmark_ej9 | llama3.2 | | | | | |
-| 10 | benchmark_ej10 | llama2 | | | | | |
-| 10 | benchmark_ej10 | llama3.2 | | | | | |
-| 11 | benchmark_ej11 | llama2 | | | | | |
-| 11 | benchmark_ej11 | llama3.2 | | | | | |
-| 12 | benchmark_ej12 | llama2 | | | | | |
-| 12 | benchmark_ej12 | llama3.2 | | | | | |
-| 13 | benchmark_ej13 | llama2 | | | | | |
-| 13 | benchmark_ej13 | llama3.2 | | | | | |
-| 14 | benchmark_ej14 | llama2 | | | | | |
-| 14 | benchmark_ej14 | llama3.2 | | | | | |
-| 15 | benchmark_ej15 | llama2 | | | | | |
-| 15 | benchmark_ej15 | llama3.2 | | | | | |
-| 16 | benchmark_ej16 | llama2 | | | | | |
-| 16 | benchmark_ej16 | llama3.2 | | | | | |
-| 17 | benchmark_ej17 | llama2 | | | | | |
-| 17 | benchmark_ej17 | llama3.2 | | | | | |
-| 18 | benchmark_ej18 | llama2 | | | | | |
-| 18 | benchmark_ej18 | llama3.2 | | | | | |
-| 19 | benchmark_ej19 | llama2 | | | | | |
-| 19 | benchmark_ej19 | llama3.2 | | | | | |
-| 20 | benchmark_ej20 | llama2 | | | | | |
-| 20 | benchmark_ej20 | llama3.2 | | | | | |
-| 21 | benchmark_ej21 | llama2 | | | | | |
-| 21 | benchmark_ej21 | llama3.2 | | | | | |
-| 22 | benchmark_ej22 | llama2 | | | | | |
-| 22 | benchmark_ej22 | llama3.2 | | | | | |
-| 23 | benchmark_ej23 | llama2 | | | | | |
-| 23 | benchmark_ej23 | llama3.2 | | | | | |
-| 24 | benchmark_ej24 | llama2 | | | | | |
-| 24 | benchmark_ej24 | llama3.2 | | | | | |
-| 25 | benchmark_ej25 | llama2 | | | | | |
-| 25 | benchmark_ej25 | llama3.2 | | | | | |
-| 26 | benchmark_ej26 | llama2 | | | | | |
-| 26 | benchmark_ej26 | llama3.2 | | | | | |
-| 27 | benchmark_ej27 | llama2 | | | | | |
-| 27 | benchmark_ej27 | llama3.2 | | | | | |
-| 28 | benchmark_ej28 | llama2 | | | | | |
-| 28 | benchmark_ej28 | llama3.2 | | | | | |
-| 29 | benchmark_ej29 | llama2 | | | | | |
-| 29 | benchmark_ej29 | llama3.2 | | | | | |
-| 30 | benchmark_ej30 | llama2 | | | | | |
-| 30 | benchmark_ej30 | llama3.2 | | | | | |
+| 1 | benchmark_ej1 | llama2 | ✓ | ✓ | ✓ | ✓ | |
+| 1 | benchmark_ej1 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
+| 2 | benchmark_ej2 | llama2 | ✓ | ✓ | ✓ | ✓ | |
+| 2 | benchmark_ej2 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
+| 3 | benchmark_ej3 | llama2 | ✓ | ✓ | ✓ | ✓ | |
+| 3 | benchmark_ej3 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
+| 4 | benchmark_ej4 | llama2 | ✓ | ✓ | ✓ | ✓ | |
+| 4 | benchmark_ej4 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
+| 5 | benchmark_ej5 | llama2 | ✓ | ✓ | ✓ | ✓ | |
+| 5 | benchmark_ej5 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
+| 6 | benchmark_ej6 | llama2 | ✓ | ✓ | ✓ | ✓ | |
+| 6 | benchmark_ej6 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
+| 7 | benchmark_ej7 | llama2 | ✓ | ✓ | ✓ | ✓ | |
+| 7 | benchmark_ej7 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
+| 8 | benchmark_ej8 | llama2 | ✓ | ✓ | ✓ | ✓ | |
+| 8 | benchmark_ej8 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
+| 9 | benchmark_ej9 | llama2 | ✓ | ✓ | ✓ | ✓ | |
+| 9 | benchmark_ej9 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
+| 10 | benchmark_ej10 | llama2 | ✓ | ✓ | ✓ | ✓ | |
+| 10 | benchmark_ej10 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
+| 11 | benchmark_ej11 | llama2 | ✓ | ✓ | ✓ | ✓ | |
+| 11 | benchmark_ej11 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
+| 12 | benchmark_ej12 | llama2 | ✓ | ✓ | ✓ | ✓ | |
+| 12 | benchmark_ej12 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
+| 13 | benchmark_ej13 | llama2 | ✓ | ✓ | ✓ | ✓ | |
+| 13 | benchmark_ej13 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
+| 14 | benchmark_ej14 | llama2 | ✓ | ✓ | ✓ | ✓ | |
+| 14 | benchmark_ej14 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
+| 15 | benchmark_ej15 | llama2 | ✓ | ✓ | ✓ | ✓ | |
+| 15 | benchmark_ej15 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
+| 16 | benchmark_ej16 | llama2 | ✓ | ✓ | ✓ | ✓ | |
+| 16 | benchmark_ej16 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
+| 17 | benchmark_ej17 | llama2 | ✓ | ✓ | ✓ | ✓ | |
+| 17 | benchmark_ej17 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
+| 18 | benchmark_ej18 | llama2 | ✓ | ✓ | ✓ | ✓ | |
+| 18 | benchmark_ej18 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
+| 19 | benchmark_ej19 | llama2 | ✓ | ✓ | ✓ | ✓ | |
+| 19 | benchmark_ej19 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
+| 20 | benchmark_ej20 | llama2 | ✓ | ✓ | ✓ | ✓ | |
+| 20 | benchmark_ej20 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
+| 21 | benchmark_ej21 | llama2 | ✓ | ✓ | ✓ | ✓ | |
+| 21 | benchmark_ej21 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
+| 22 | benchmark_ej22 | llama2 | ✓ | ✓ | ✓ | ✓ | |
+| 22 | benchmark_ej22 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
+| 23 | benchmark_ej23 | llama2 | ✓ | ✓ | ✓ | ✓ | |
+| 23 | benchmark_ej23 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
+| 24 | benchmark_ej24 | llama2 | ✓ | ✓ | ✓ | ✓ | |
+| 24 | benchmark_ej24 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
+| 25 | benchmark_ej25 | llama2 | ✓ | ✓ | ✓ | ✓ | |
+| 25 | benchmark_ej25 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
+| 26 | benchmark_ej26 | llama2 | ✓ | ✓ | ✓ | ✓ | |
+| 26 | benchmark_ej26 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
+| 27 | benchmark_ej27 | llama2 | ✓ | ✓ | ✓ | ✓ | |
+| 27 | benchmark_ej27 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
+| 28 | benchmark_ej28 | llama2 | ✓ | ✓ | ✓ | ✓ | |
+| 28 | benchmark_ej28 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
+| 29 | benchmark_ej29 | llama2 | ✓ | ✓ | ✓ | ✓ | |
+| 29 | benchmark_ej29 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
+| 30 | benchmark_ej30 | llama2 | ✓ | ✓ | ✓ | ✓ | |
+| 30 | benchmark_ej30 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
 
 ## 5. Conclusiones
 
