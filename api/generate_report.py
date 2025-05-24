@@ -85,6 +85,9 @@ def generate_report(results_file, output_file):
     # Calcular promedios
     averages = times_df.mean().round(1)
     
+    # Calcular tiempo total por modelo
+    total_times = times_df.sum().round(1)
+    
     # Preparar el informe
     system_info = get_system_info()
     
@@ -122,6 +125,7 @@ def generate_report(results_file, output_file):
             time_table.append(f"| {problem_name} | {times_df.loc[problem, models[0]]} |")
         
         time_table.append(f"| **Promedio** | {averages[models[0]]} |")
+        time_table.append(f"| **Tiempo Total** | {total_times[models[0]]} |")
     
     else:  # Dos o más modelos
         headers = [models[0], models[1], "Diferencia (ms)", "Diferencia (%)"] if len(models) == 2 else models
@@ -150,6 +154,16 @@ def generate_report(results_file, output_file):
             avg_row += f" {averages['diff']} | {averages['diff_percent']}% |"
         
         time_table.append(avg_row)
+        
+        # Agregar fila de tiempo total
+        total_row = "| **Tiempo Total** |"
+        for model in models:
+            total_row += f" {total_times[model]} |"
+        
+        if len(models) == 2:
+            total_row += " | |"  # Espacios vacíos para las columnas de diferencia
+        
+        time_table.append(total_row)
     
     report.extend(time_table)
     
@@ -204,7 +218,7 @@ def generate_report(results_file, output_file):
     for problem in problem_order:
         problem_num = problem.replace("benchmark_ej", "")
         for model in models:
-            quality_table.append(f"| {problem_num} | {problem} | {model} | | | | | |")
+            quality_table.append(f"| {problem_num} | {problem} | {model} | ✓ | ✓ | ✓ | ✓ | |")
     
     report.extend(quality_table)
     
