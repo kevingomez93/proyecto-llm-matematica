@@ -126,13 +126,13 @@
 | 25 | benchmark_ej25 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
 | 26 | benchmark_ej26 | llama2 | ✓ | ✓ | ✓ | ✓ | |
 | 26 | benchmark_ej26 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
-| 27 | benchmark_ej27 | llama2 | ✓ | ✓ | ✓ | ✓ | |
+| 27 | benchmark_ej27 | llama2 | ✓ | ✓ | ✓ |  | |
 | 27 | benchmark_ej27 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
 | 28 | benchmark_ej28 | llama2 | ✓ | ✓ |  | ✓ | |
 | 28 | benchmark_ej28 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
 | 29 | benchmark_ej29 | llama2 | ✓ | ✓ | ✓ | ✓ | |
 | 29 | benchmark_ej29 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
-| 30 | benchmark_ej30 | llama2 | ✓ | ✓ | ✓ | ✓ | |
+| 30 | benchmark_ej30 | llama2 | ✓ | ✓ | ✓ |  | |
 | 30 | benchmark_ej30 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
 
 ## 5. Conclusiones
