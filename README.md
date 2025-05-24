@@ -80,7 +80,7 @@ La interfaz web se abrirá automáticamente en `http://localhost:8501`.
 ### Modo Test
 
 - Selecciona múltiples modelos para comparar
-- Elige entre 10 problemas matemáticos predefinidos
+- Elige entre 30 problemas matemáticos predefinidos
 - Visualiza resultados con gráficos comparativos:
   - Barras horizontales por problema
   - Diagrama de Gantt de tiempos
