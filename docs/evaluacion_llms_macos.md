@@ -74,13 +74,13 @@
 
 | # | Problema | Modelo | Precisión | Claridad | Notación | Completitud | Observaciones |
 |---|----------|--------|-----------|----------|----------|-------------|---------------|
-| 1 | benchmark_ej1 | llama2 | ✓ | ✓ | ✓ | ✓ | |
+| 1 | benchmark_ej1 | llama2 | ✓ | ✓ | ✓ |  | |
 | 1 | benchmark_ej1 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
-| 2 | benchmark_ej2 | llama2 | ✓ | ✓ | ✓ | ✓ | |
+| 2 | benchmark_ej2 | llama2 | ✓ | ✓ | ✓ |  | |
 | 2 | benchmark_ej2 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
-| 3 | benchmark_ej3 | llama2 | ✓ | ✓ | ✓ | ✓ | |
+| 3 | benchmark_ej3 | llama2 | ✓ | ✓ |  | ✓ | |
 | 3 | benchmark_ej3 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
-| 4 | benchmark_ej4 | llama2 | ✓ | ✓ | ✓ | ✓ | |
+| 4 | benchmark_ej4 | llama2 | ✓ | ✓ | ✓ |  | |
 | 4 | benchmark_ej4 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
 | 5 | benchmark_ej5 | llama2 | ✓ | ✓ | ✓ | ✓ | |
 | 5 | benchmark_ej5 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
@@ -88,21 +88,21 @@
 | 6 | benchmark_ej6 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
 | 7 | benchmark_ej7 | llama2 | ✓ | ✓ | ✓ | ✓ | |
 | 7 | benchmark_ej7 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
-| 8 | benchmark_ej8 | llama2 | ✓ | ✓ | ✓ | ✓ | |
+| 8 | benchmark_ej8 | llama2 | ✓ |  | ✓ | ✓ | |
 | 8 | benchmark_ej8 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
-| 9 | benchmark_ej9 | llama2 | ✓ | ✓ | ✓ | ✓ | |
+| 9 | benchmark_ej9 | llama2 | ✓ | ✓ | ✓ |  | |
 | 9 | benchmark_ej9 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
 | 10 | benchmark_ej10 | llama2 | ✓ | ✓ | ✓ | ✓ | |
 | 10 | benchmark_ej10 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
-| 11 | benchmark_ej11 | llama2 | ✓ | ✓ | ✓ | ✓ | |
+| 11 | benchmark_ej11 | llama2 |  | ✓ | ✓ | ✓ | |
 | 11 | benchmark_ej11 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
-| 12 | benchmark_ej12 | llama2 | ✓ | ✓ | ✓ | ✓ | |
+| 12 | benchmark_ej12 | llama2 | ✓ | ✓ |  | ✓ | |
 | 12 | benchmark_ej12 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
 | 13 | benchmark_ej13 | llama2 | ✓ | ✓ | ✓ | ✓ | |
 | 13 | benchmark_ej13 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
 | 14 | benchmark_ej14 | llama2 | ✓ | ✓ | ✓ | ✓ | |
 | 14 | benchmark_ej14 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
-| 15 | benchmark_ej15 | llama2 | ✓ | ✓ | ✓ | ✓ | |
+| 15 | benchmark_ej15 | llama2 | ✓ |  | ✓ | ✓ | |
 | 15 | benchmark_ej15 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
 | 16 | benchmark_ej16 | llama2 | ✓ | ✓ | ✓ | ✓ | |
 | 16 | benchmark_ej16 | llama3.2 | ✓ | ✓ | ✓ | ✓ | |
@@ -138,18 +138,17 @@
 ## 5. Conclusiones
 
 ### 5.1 Rendimiento General
-- Comparativa de tiempos de respuesta entre modelos
-- Análisis de estabilidad y consistencia
-- Evaluación de la eficiencia computacional
+- Comparativa de tiempos de respuesta entre modelos: Llama3.2 es apenas mas rapido, solo en algunas preguntas especificas tardo mas que Llama2.
+
 
 ### 5.2 Comparativa por Idioma
-- Análisis de rendimiento en español vs inglés
-- Identificación de posibles sesgos lingüísticos
+- Análisis de rendimiento en español vs inglés: Llama3.2 en Ingles obtiene las respuestas mas acertadas y tarda menos en responder.
+
 
 ## 6. Recomendaciones
 
 ### 6.1 Selección de Modelo
-- Recomendaciones basadas en el tipo de problema
+- Recomendaciones basadas en el tipo de problema: Las versiones de llama2 y 3.2 fueron seleccionadas por tener 
 - Consideraciones de hardware necesarias
 
 ### 6.2 Mejores Prácticas
