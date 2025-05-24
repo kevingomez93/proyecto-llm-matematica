@@ -142,7 +142,3 @@ Las contribuciones son bienvenidas. Puedes:
 - Añadir nuevos problemas matemáticos en `prompts/`
 - Mejorar las visualizaciones en `api/ui.py`
 - Añadir soporte para nuevos modelos
-
-## Licencia
-
-Este proyecto está disponible bajo la licencia MIT.
